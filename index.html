@@ -103,39 +103,47 @@
   .pk3{right:24%;bottom:-14%;width:20%;height:32%;transform:rotate(-1.5deg)}
 
   /* SCROLL slider */
-  .scrollwrap{position:relative;height:340vh}
+  .scrollwrap{position:relative;height:380vh}
   .sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#1C1512;
-    display:flex;flex-direction:column;padding:clamp(20px,3vw,40px) clamp(24px,4vw,60px)}
-  .slider-header{display:flex;align-items:flex-end;justify-content:space-between;
-    margin-bottom:clamp(16px,2vw,28px);flex-shrink:0}
+    display:flex;flex-direction:column}
+  .slider-header{position:absolute;top:0;left:0;right:0;z-index:5;
+    display:flex;align-items:flex-end;justify-content:space-between;
+    padding:clamp(20px,3vw,36px) clamp(24px,4vw,56px);pointer-events:none}
   .smalltype{font-weight:300;font-size:clamp(1.1rem,2vw,1.7rem);line-height:1.04;color:var(--ink)}
   .smalltype .l{display:block}.smalltype .l:nth-child(2){padding-left:1.6vw}.smalltype .l:nth-child(3){padding-left:.6vw}
   .slider-counter{font-size:clamp(1.4rem,2.2vw,2.2rem);color:var(--dim);font-weight:300;letter-spacing:-.01em}
   .tile-layer{position:absolute;inset:0;pointer-events:none;z-index:1}
   .tile{position:absolute;overflow:hidden;border-radius:12px;will-change:transform,opacity;
-    box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.7);transition:opacity .4s}
   .t1{left:1.5%;top:14%;width:23%;height:42%}
   .t2{left:1.5%;top:59%;width:23%;height:32%}
   .t3{left:60%;top:4%;width:16%;height:22%}
   .t4{right:1.5%;top:14%;width:21%;height:37%}
   .t5{right:1.5%;top:54%;width:21%;height:38%}
   .t6{left:26%;top:72%;width:22%;height:26%}
-  .slider{position:relative;flex:1;z-index:2;border-radius:14px;overflow:hidden;
-    box-shadow:0 50px 90px -40px rgba(0,0,0,.85);will-change:width,height;
-    margin:0 auto;width:100%}
+  /* central card — starts small, grows to fullscreen */
+  .slider{position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:38%;height:48%;
+    border-radius:14px;overflow:hidden;z-index:3;
+    box-shadow:0 50px 90px -40px rgba(0,0,0,.85);
+    will-change:width,height,border-radius}
   .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
   .slide.active{opacity:1}
-  .slide img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.05)}
+  .slide > *{width:100%;height:100%;background-size:cover;background-position:center;
+    will-change:transform;transform:scale(1.08);transition:transform .1s linear}
   .slide::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(0,0,0,.0) 40%,rgba(0,0,0,.55))}
+    background:linear-gradient(180deg,rgba(0,0,0,.0) 40%,rgba(0,0,0,.6))}
   .slide-overlay{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;
-    justify-content:flex-end;padding:clamp(20px,3vw,40px)}
+    justify-content:flex-end;padding:clamp(20px,3vw,44px);
+    opacity:0;transition:opacity .5s}
+  .slider.expanded .slide-overlay{opacity:1}
   .place{font-size:clamp(1.4rem,2.4vw,2.4rem);font-weight:300;
-    text-shadow:0 2px 20px rgba(0,0,0,.5);margin-bottom:clamp(16px,2vw,28px)}
+    text-shadow:0 2px 20px rgba(0,0,0,.5);margin-bottom:clamp(14px,2vw,24px)}
   .slide-nav{display:flex;gap:12px}
   .slide-nav button{width:clamp(48px,5vw,64px);height:clamp(48px,5vw,64px);border-radius:50%;
     display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2);
-    transition:transform .35s,background .35s,border-color .35s}
+    transition:transform .35s,background .35s,border-color .35s;pointer-events:auto}
   .slide-nav button svg{width:40%;height:40%;fill:none;stroke-width:1.5}
   .slide-nav .prev{background:#efe9df}.slide-nav .prev svg{stroke:#161313}
   .slide-nav .next{background:rgba(10,9,10,.55);backdrop-filter:blur(6px)}.slide-nav .next svg{stroke:#fff}
@@ -690,17 +698,46 @@
   const wrap=document.getElementById('scrollwrap'),slider=document.getElementById('slider');
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+
+  /* magnetic parallax on slider image */
+  slider.addEventListener('mousemove',e=>{
+    const r=slider.getBoundingClientRect();
+    const mx=(e.clientX-r.left)/r.width-.5;
+    const my=(e.clientY-r.top)/r.height-.5;
+    const active=slider.querySelector('.slide.active > *');
+    if(active)active.style.transform='scale(1.08) translate('+(mx*-18)+'px,'+(my*-12)+'px)';
+  });
+  slider.addEventListener('mouseleave',()=>{
+    const active=slider.querySelector('.slide.active > *');
+    if(active)active.style.transform='scale(1.08) translate(0,0)';
+  });
+
   function onScroll(){
     document.body.classList.toggle('scrolled',scrollY>40);
     const r=wrap.getBoundingClientRect();
     const total=wrap.offsetHeight-innerHeight;
     const p=clamp(-r.top/total,0,1);
     const e=ease(p);
-    /* grow slider from padded → edge-to-edge */
-    const pad=clamp((1-e)*clamp(24,4,80),0,60);
-    slider.style.margin='0 '+pad+'px';
-    slider.style.borderRadius=(14*(1-e))+'px';
-    const fadeUI=clamp(1-p*2,0,1);
+    /* phase 1 (p 0→0.5): tiles fade, slider grows */
+    /* phase 2 (p 0.5→1): slider fills screen, slides change */
+    const grow=clamp(e*2,0,1);          /* 0→1 during first half */
+    const w=38+grow*62;                 /* 38% → 100% */
+    const h=48+grow*52;                 /* 48% → 100% */
+    const br=14*(1-grow);               /* 14px → 0px */
+    slider.style.width=w+'%';
+    slider.style.height=h+'%';
+    slider.style.borderRadius=br+'px';
+    /* remove centering transform when fullscreen */
+    if(grow>=.99){
+      slider.style.top='0';slider.style.left='0';
+      slider.style.transform='none';
+      slider.classList.add('expanded');
+    } else {
+      slider.style.top='50%';slider.style.left='50%';
+      slider.style.transform='translate(-50%,-50%)';
+      slider.classList.remove('expanded');
+    }
+    const fadeUI=clamp(1-p*3,0,1);
     const st=document.querySelector('.smalltype');
     if(st)st.style.opacity=fadeUI;
     const ctr=document.querySelector('.slider-counter');
