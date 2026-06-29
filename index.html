@@ -101,12 +101,16 @@
   .intro.draw .orbit ellipse{animation:draw 3.5s ease forwards}
   @keyframes draw{to{stroke-dashoffset:0}}
   .bigtype{position:relative;z-index:3;text-align:center;line-height:.78}
-  .bigtype .ex{display:block;font-weight:300;font-size:clamp(5rem,17vw,16rem);color:#efe9df;letter-spacing:-.01em}
-  .bigtype .pl{display:block;font-weight:300;font-size:clamp(5rem,17vw,16rem);letter-spacing:-.01em;margin-top:-.12em;
+  .bigtype .ex{display:block;font-weight:300;font-size:clamp(5rem,17vw,16rem);color:#efe9df;letter-spacing:-.01em;overflow:hidden}
+  .bigtype .pl{display:block;font-weight:300;font-size:clamp(5rem,17vw,16rem);letter-spacing:-.01em;margin-top:-.12em;overflow:hidden;
     background:linear-gradient(180deg,#cabfa8 0%,#5b554f 55%,#1a1819 95%);
     -webkit-background-clip:text;background-clip:text;color:transparent}
-  .nev{margin-top:18px;font-weight:300;font-size:clamp(1.2rem,2.4vw,2rem);line-height:1.05;color:var(--ink)}
-  .nev .l{display:block}.nev .l:nth-child(2){padding-left:5vw}.nev .l:nth-child(3){padding-left:2.5vw}
+  /* bigtype letter animation */
+  .bch{display:inline-block;transform:translateY(115%);opacity:0;
+    transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity 1.2s cubic-bezier(.16,1,.3,1)}
+  .intro.draw .bch{transform:translateY(0);opacity:1}
+  .nev{margin-top:28px;font-weight:300;font-size:clamp(1.2rem,2.4vw,2rem);line-height:1.4;color:var(--dim);text-align:center}
+  .nev .l{display:block}
   .peek{position:absolute;border-radius:12px;overflow:hidden;opacity:.85;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
   .peek img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.8)}
   .pk3{right:24%;bottom:-14%;width:20%;height:32%;transform:rotate(-1.5deg)}
@@ -391,8 +395,9 @@
   <section class="intro" id="intro">
     <svg class="orbit" viewBox="0 0 1200 600" preserveAspectRatio="none"><ellipse cx="600" cy="300" rx="560" ry="220"/></svg>
     <div class="bigtype">
-      <span class="ex en-only">Explore</span><span class="ex pl-only" style="display:none">Odkryj</span><span class="pl en-only">Places</span><span class="pl pl-only" style="display:none">Miejsca</span>
-      <div class="nev"><span class="l"><span data-en="Not" data-pl="Nie">Not</span></span><span class="l"><span data-en="Everything" data-pl="Wszystko">Everything</span></span><span class="l"><span data-en="is Visible" data-pl="jest Widoczne">is Visible</span></span></div>
+      <span class="ex btw" data-en="Explore" data-pl="Odkryj">Explore</span>
+      <span class="pl btw" data-en="Places" data-pl="Miejsca">Places</span>
+      <div class="nev"><span class="l" data-en="Not" data-pl="Nie">Not</span><span class="l" data-en="Everything" data-pl="Wszystko">Everything</span><span class="l" data-en="is Visible" data-pl="jest Widoczne">is Visible</span></div>
     </div>
   </section>
 
@@ -717,9 +722,25 @@
   buildHeroChars('en');
   requestAnimationFrame(()=>setTimeout(()=>document.body.classList.add('in'),60));
 
-  /* intro orbit */
+  /* bigtype letter split */
+  function splitBigtype(lang){
+    document.querySelectorAll('.btw').forEach((el,wi)=>{
+      const txt=lang==='pl'?(el.dataset.pl||el.dataset.en):el.dataset.en;
+      el.innerHTML='';
+      [...txt].forEach((ch,i)=>{
+        const s=document.createElement('span');
+        s.className='bch';
+        s.textContent=ch===' '?' ':ch;
+        s.style.transitionDelay=(wi*.14+i*.055)+'s';
+        el.appendChild(s);
+      });
+    });
+  }
+  splitBigtype('en');
+
+  /* intro orbit + letter trigger */
   const intro=document.getElementById('intro');
-  new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)intro.classList.add('draw')})},{threshold:.25}).observe(intro);
+  new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)intro.classList.add('draw')})},{threshold:.15}).observe(intro);
 
   /* scroll reveal */
   const srObs=new IntersectionObserver((es)=>{
@@ -884,16 +905,26 @@
   /* language switcher */
   (function(){
     function applyLang(lang){
-      document.querySelectorAll('[data-en]').forEach(el=>{
+      /* swap regular text elements — skip .btw (bigtype words, rebuilt separately) */
+      document.querySelectorAll('[data-en]:not(.btw)').forEach(el=>{
         el.textContent=lang==='pl'?(el.dataset.pl||el.dataset.en):el.dataset.en;
       });
+      /* rebuild bigtype letters */
+      splitBigtype(lang);
+      /* if intro already animated, keep letters visible */
+      if(intro.classList.contains('draw')){
+        document.querySelectorAll('.btw .bch').forEach(ch=>{
+          ch.style.transitionDelay='0s';
+          ch.style.transform='translateY(0)';
+          ch.style.opacity='1';
+        });
+      }
       document.body.classList.toggle('lang-pl',lang==='pl');
       document.querySelectorAll('.lang-btn').forEach(b=>{
         b.classList.toggle('active',b.dataset.lang===lang);
       });
       /* rebuild hero */
       buildHeroChars(lang);
-      /* re-add 'in' class so chars animate */
       document.body.classList.remove('in');
       requestAnimationFrame(()=>setTimeout(()=>document.body.classList.add('in'),20));
       localStorage.setItem('hl_lang',lang);
