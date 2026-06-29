@@ -42,6 +42,48 @@
     font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
     border-radius:9px;transition:background .3s;text-decoration:none;display:inline-flex;align-items:center;cursor:none}
   .send:hover{background:rgba(255,255,255,.13)}
+  .burger{width:48px;height:38px;border-radius:9px;background:#efe9df;border:none;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:none}
+  .burger i{display:block;width:18px;height:1.5px;background:#1a1a1a}
+  .burger i:nth-child(2){width:12px}
+  /* menu overlay */
+  #overlay{position:fixed;inset:0;z-index:58;
+    background:radial-gradient(130% 120% at 80% 0%,#261F1B 0%,#1A1210 55%,#0E0A08 100%);
+    clip-path:inset(0 0 100% 0);transition:clip-path .9s cubic-bezier(.76,0,.24,1);
+    display:flex;flex-direction:column;padding:28px;visibility:hidden}
+  @media(min-width:768px){#overlay{padding:48px}}
+  body.menu-open #overlay{clip-path:inset(0 0 0 0);visibility:visible}
+  body.menu-closing #overlay{clip-path:inset(0 0 100% 0);transition-delay:.22s;transition-duration:.7s}
+  #overlay .ovtop{display:flex;align-items:center;justify-content:space-between}
+  #overlay .ovtop .mono{color:var(--dim)}
+  .navm{flex:1;display:flex;align-items:center}.navm ul{list-style:none}
+  .navm li{overflow:hidden;padding-bottom:.22em;margin-bottom:-.22em}
+  .navm a{position:relative;display:flex;align-items:baseline;gap:22px;font-weight:300;
+    font-size:clamp(2.6rem,9vw,7rem);line-height:1.12;letter-spacing:-.02em;color:var(--ink);
+    text-decoration:none;transform:translateY(115%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+  body.menu-open .navm a{transform:translateY(0)}
+  .navm li:nth-child(1) a{transition-delay:.18s}.navm li:nth-child(2) a{transition-delay:.26s}
+  .navm li:nth-child(3) a{transition-delay:.34s}.navm li:nth-child(4) a{transition-delay:.42s}
+  body.menu-closing .navm a{transform:translateX(-110%);transition:transform .45s cubic-bezier(.76,0,.24,1)}
+  body.menu-closing .navm li:nth-child(1) a{transition-delay:.0s}
+  body.menu-closing .navm li:nth-child(2) a{transition-delay:.05s}
+  body.menu-closing .navm li:nth-child(3) a{transition-delay:.10s}
+  body.menu-closing .navm li:nth-child(4) a{transition-delay:.15s}
+  .nav-soon{font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:.14em;color:var(--faint);margin-left:14px;vertical-align:middle;opacity:.6}
+  .navm a .idx{font-family:'Archivo',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--faint);transform:translateY(-1.2em);transition:color .4s}
+  .navm a .lab{display:inline-block;transition:transform .5s cubic-bezier(.16,1,.3,1),color .4s}
+  .navm a:hover .lab{transform:translateX(28px);color:var(--gold)}.navm a:hover .idx{color:var(--gold)}
+  .navm a::after{content:"";position:absolute;left:0;bottom:6px;height:1px;width:0;background:var(--gold);transition:width .5s cubic-bezier(.16,1,.3,1)}
+  .navm a:hover::after{width:100%}
+  .ovbottom{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-end;
+    opacity:0;transform:translateY(16px);transition:opacity .8s ease .5s,transform .8s ease .5s}
+  body.menu-open .ovbottom{opacity:1;transform:translateY(0)}
+  body.menu-closing .ovbottom{opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease}
+  .ovbottom .col{max-width:22rem}
+  .ovbottom .col p{font-size:1.05rem;font-weight:300;line-height:1.4;color:var(--dim)}
+  .ovbottom .col .mono{display:block;margin-bottom:10px;color:var(--faint)}
+  .ovbottom a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px;transition:color .3s,border-color .3s}
+  .ovbottom a:hover{color:var(--ink);border-color:var(--gold)}
   .lang-sw{display:flex;align-items:center;gap:2px}
   .lang-btn{background:none;border:none;font-family:'Archivo',sans-serif;font-size:10px;
     letter-spacing:.18em;text-transform:uppercase;color:var(--faint);cursor:none;
@@ -141,6 +183,7 @@
         <button class="lang-btn" data-lang="pl">PL</button>
       </div>
       <a href="contact.html" class="send" data-cursor data-en="Contact" data-pl="Kontakt">Contact</a>
+      <button class="burger" id="openBtn" data-cursor><i></i><i></i></button>
     </div>
   </header>
 
@@ -223,6 +266,22 @@
     </div>
   </main>
 
+  <div id="overlay">
+    <div class="ovtop"><span class="mono">Holistone&nbsp;Resorts</span>
+      <button class="send" id="closeBtn" data-cursor>Close /</button></div>
+    <nav class="navm"><ul>
+      <li><a href="index.html#scrollwrap" data-cursor><span class="idx">01</span><span class="lab" data-en="Experience" data-pl="Doświadczenie">Experience</span><span class="nav-soon">(soon)</span></a></li>
+      <li><a href="spaces.html" data-cursor><span class="idx">02</span><span class="lab" data-en="Spaces" data-pl="Przestrzenie">Spaces</span></a></li>
+      <li><a href="index.html#wellbeing" data-cursor><span class="idx">03</span><span class="lab">Wellbeing</span><span class="nav-soon">(soon)</span></a></li>
+      <li><a href="index.html#about" data-cursor><span class="idx">04</span><span class="lab" data-en="About" data-pl="O nas">About</span><span class="nav-soon">(soon)</span></a></li>
+    </ul></nav>
+    <div class="ovbottom">
+      <div class="col"><span class="mono">Access</span><p><span data-en="Access is personal, not assumed." data-pl="Dostęp jest osobisty, nie domyślny.">Access is personal, not assumed.</span> <a href="contact.html" data-cursor data-en="Request introduction →" data-pl="Poproś o wprowadzenie →">Request introduction →</a></p></div>
+      <div class="col"><span class="mono">Resorts</span><p>Holistic luxury · architecture · nature · stillness</p></div>
+      <div class="col"><span class="mono">By Kaliński Invest</span><p data-en="Places built to last — created with intention." data-pl="Miejsca tworzone z myślą o trwałości — z intencją.">Places built to last — created with intention.</p></div>
+    </div>
+  </div>
+
 <script>
   const ring=document.getElementById('ring'),dot=document.getElementById('dot');
   let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
@@ -269,6 +328,15 @@
   document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
   const saved=localStorage.getItem('hl_lang');
   if(saved&&saved!=='en')applyLang(saved);
+
+  /* menu */
+  function closeMenu(){
+    document.body.classList.add('menu-closing');
+    setTimeout(()=>document.body.classList.remove('menu-open','menu-closing'),1000);
+  }
+  document.getElementById('openBtn').onclick=()=>document.body.classList.add('menu-open');
+  document.getElementById('closeBtn').onclick=closeMenu;
+  addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 </script>
 </body>
 </html>
