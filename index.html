@@ -33,13 +33,6 @@
   #dot{position:fixed;top:0;left:0;width:4px;height:4px;background:#fff;border-radius:50%;
     transform:translate(-50%,-50%);z-index:70;pointer-events:none;mix-blend-mode:difference}
 
-  /* lang switcher */
-  .lang-sw{display:flex;align-items:center;gap:2px;margin-right:8px}
-  .lang-btn{background:none;border:none;font-family:'Archivo',sans-serif;font-size:10px;
-    letter-spacing:.18em;text-transform:uppercase;color:var(--faint);cursor:none;
-    padding:6px 4px;transition:color .3s}
-  .lang-btn.active{color:var(--ink)}
-  .lang-sep{color:var(--faint);font-size:10px;font-family:'Archivo',sans-serif}
 
   /* topbar */
   .topbar{position:fixed;top:0;left:0;right:0;z-index:55;display:flex;align-items:center;
@@ -298,19 +291,27 @@
   /* MENU OVERLAY */
   #overlay{position:fixed;inset:0;z-index:58;
     background:radial-gradient(130% 120% at 80% 0%,#261F1B 0%,#1A1210 55%,#0E0A08 100%);
-    clip-path:inset(0 0 100% 0);transition:clip-path 1s cubic-bezier(.76,0,.24,1);
+    clip-path:inset(0 0 100% 0);transition:clip-path .9s cubic-bezier(.76,0,.24,1);
     display:flex;flex-direction:column;padding:28px;visibility:hidden}
   @media(min-width:768px){#overlay{padding:48px}}
   body.menu-open #overlay{clip-path:inset(0 0 0 0);visibility:visible}
+  body.menu-closing #overlay{clip-path:inset(0 0 100% 0);transition-delay:.22s;transition-duration:.7s}
   #overlay .ovtop{display:flex;align-items:center;justify-content:space-between}
   #overlay .ovtop .mono{color:var(--dim)}
-  .navm{flex:1;display:flex;align-items:center}.navm ul{list-style:none}.navm li{overflow:hidden}
+  .navm{flex:1;display:flex;align-items:center}.navm ul{list-style:none}
+  .navm li{overflow:hidden;padding-bottom:.1em}
   .navm a{position:relative;display:flex;align-items:baseline;gap:22px;font-weight:300;
-    font-size:clamp(2.6rem,9vw,7rem);line-height:1.04;letter-spacing:-.02em;color:var(--ink);
+    font-size:clamp(2.6rem,9vw,7rem);line-height:1.08;letter-spacing:-.02em;color:var(--ink);
     text-decoration:none;transform:translateY(110%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
   body.menu-open .navm a{transform:translateY(0)}
   .navm li:nth-child(1) a{transition-delay:.18s}.navm li:nth-child(2) a{transition-delay:.26s}
   .navm li:nth-child(3) a{transition-delay:.34s}.navm li:nth-child(4) a{transition-delay:.42s}
+  /* close: items fly out left with stagger */
+  body.menu-closing .navm a{transform:translateX(-110%);transition:transform .45s cubic-bezier(.76,0,.24,1)}
+  body.menu-closing .navm li:nth-child(1) a{transition-delay:.0s}
+  body.menu-closing .navm li:nth-child(2) a{transition-delay:.05s}
+  body.menu-closing .navm li:nth-child(3) a{transition-delay:.10s}
+  body.menu-closing .navm li:nth-child(4) a{transition-delay:.15s}
   .navm a .idx{font-family:'Archivo',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--faint);
     transform:translateY(-1.2em);transition:color .4s}
   .navm a .lab{display:inline-block;transition:transform .5s cubic-bezier(.16,1,.3,1),color .4s}
@@ -321,9 +322,13 @@
   .ovbottom{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-end;
     opacity:0;transform:translateY(16px);transition:opacity .8s ease .5s,transform .8s ease .5s}
   body.menu-open .ovbottom{opacity:1;transform:translateY(0)}
+  body.menu-closing .ovbottom{opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease}
   .ovbottom .col{max-width:22rem}
   .ovbottom .col p{font-size:1.05rem;font-weight:300;line-height:1.4;color:var(--dim)}
   .ovbottom .col .mono{display:block;margin-bottom:10px;color:var(--faint)}
+  .ovbottom a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line);
+    padding-bottom:1px;transition:color .3s,border-color .3s}
+  .ovbottom a:hover{color:var(--ink);border-color:var(--gold)}
 
 /* ── LOCATION STAGE ── */
   .loc-stage{position:relative;margin-top:clamp(48px,6vw,96px);overflow:hidden;border:1px solid var(--line)}
@@ -798,8 +803,12 @@
 
   /* menu */
   document.getElementById('openBtn').onclick=()=>document.body.classList.add('menu-open');
-  document.getElementById('closeBtn').onclick=()=>document.body.classList.remove('menu-open');
-  addEventListener('keydown',e=>{if(e.key==='Escape')document.body.classList.remove('menu-open')});
+  function closeMenu(){
+    document.body.classList.add('menu-closing');
+    setTimeout(()=>document.body.classList.remove('menu-open','menu-closing'),1000);
+  }
+  document.getElementById('closeBtn').onclick=closeMenu;
+  addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 
   /* cursor + parallax */
   const ring=document.getElementById('ring'),dot=document.getElementById('dot'),rt=document.getElementById('ringtxt');
