@@ -163,7 +163,7 @@
 
   /* PILLARS */
   .pillars-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:clamp(40px,5vw,80px);background:var(--line)}
-  @media(min-width:900px){.pillars-grid{grid-template-columns:repeat(4,1fr)}}
+  @media(min-width:900px){.pillars-grid{grid-template-columns:repeat(5,1fr)}}
   .pillar{background:#1C1512;padding:clamp(32px,4vw,52px) clamp(24px,3vw,36px)}
   .pillar-num{display:block;color:var(--faint);margin-bottom:clamp(20px,3vw,36px)}
   .pillar h3{font-weight:300;font-size:clamp(1.6rem,2.2vw,2.2rem);margin-bottom:14px;letter-spacing:-.01em}
@@ -277,6 +277,44 @@
   .ovbottom .col{max-width:22rem}
   .ovbottom .col p{font-size:1.05rem;font-weight:300;line-height:1.4;color:var(--dim)}
   .ovbottom .col .mono{display:block;margin-bottom:10px;color:var(--faint)}
+
+  /* INVESTMENTS */
+  .inv-grid{display:grid;gap:1px;background:var(--line);margin-top:clamp(40px,5vw,80px)}
+  @media(min-width:800px){.inv-grid{grid-template-columns:repeat(2,1fr)}}
+  .inv-card{background:#1C1512;padding:clamp(32px,4vw,56px)}
+  .sec-dark .inv-card{background:#130E0B}
+  .inv-title{font-weight:300;font-size:clamp(1.5rem,2.2vw,2.2rem);letter-spacing:-.01em;margin-bottom:clamp(20px,2.5vw,32px);line-height:1.1}
+  .inv-meta{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+  .inv-meta-row{display:flex;gap:12px;align-items:baseline;font-size:clamp(.82rem,1vw,.95rem)}
+  .inv-meta-label{color:var(--faint);min-width:110px;flex-shrink:0}
+  .inv-meta-value{color:var(--dim);font-weight:300}
+  .inv-desc{font-weight:300;font-size:clamp(.88rem,1.1vw,1rem);line-height:1.65;color:var(--dim);margin-bottom:24px}
+  .inv-badge{display:inline-flex;align-items:center;gap:8px;color:var(--faint)}
+  .inv-badge::before{content:"";display:block;width:6px;height:6px;border-radius:50%;background:var(--faint)}
+
+  /* ONE BRAND */
+  .onebrand-body{max-width:52rem;font-weight:300;font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.6;color:var(--dim);margin-top:clamp(28px,4vw,48px)}
+
+  /* LOCATIONS */
+  .loc-row{display:flex;flex-wrap:wrap;gap:clamp(12px,2vw,24px);margin-top:clamp(40px,5vw,70px);align-items:baseline}
+  .loc-item{font-weight:300;font-size:clamp(2.2rem,5.5vw,5.5rem);letter-spacing:-.03em;color:var(--ink);line-height:1;opacity:.18;transition:opacity .5s,color .5s}
+  .loc-item:hover{opacity:1;color:var(--gold)}
+  .loc-sep{color:var(--faint);font-size:.7rem;align-self:center;padding:0 4px}
+
+  /* STATUS */
+  .status-proj-grid{display:grid;gap:1px;background:var(--line);margin-top:clamp(40px,5vw,70px)}
+  @media(min-width:600px){.status-proj-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1000px){.status-proj-grid{grid-template-columns:repeat(4,1fr)}}
+  .status-card{background:#1C1512;padding:clamp(24px,3vw,40px)}
+  .status-name{font-weight:300;font-size:clamp(1rem,1.4vw,1.3rem);letter-spacing:-.01em;margin-bottom:6px}
+  .status-loc{color:var(--faint);margin-bottom:20px}
+  .status-pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 16px;color:var(--faint)}
+
+  /* DEVELOPER */
+  .dev-grid{display:grid;gap:clamp(40px,6vw,80px);align-items:center;margin-top:clamp(40px,5vw,70px)}
+  @media(min-width:900px){.dev-grid{grid-template-columns:1fr 2fr}}
+  .dev-name{font-weight:300;font-size:clamp(1.6rem,3vw,3rem);letter-spacing:-.02em;line-height:1}
+  .dev-sub{color:var(--faint);margin-top:10px}
 </style>
 </head>
 <body>
@@ -293,38 +331,36 @@
 
   <!-- HERO -->
   <section class="hero">
-    <p class="mono tag rv" style="transition-delay:.56s">Holistone&nbsp;Resorts</p>
+    <p class="mono tag rv" style="transition-delay:.56s">Holistone&nbsp;Resorts&nbsp;·&nbsp;By&nbsp;Kaliński&nbsp;Invest</p>
     <h1>
-      <span class="line" data-word="A place"></span>
-      <span class="line" data-word="shaped" data-it="1"></span>
-      <span class="line indent" data-word="by balance."></span>
+      <span class="line" data-word="Upcoming"></span>
+      <span class="line" data-word="resort" data-it="1"></span>
+      <span class="line indent" data-word="investments."></span>
     </h1>
     <div class="hrow">
-      <p class="lede rv" style="transition-delay:1s">Holistone Resorts creates places built around harmony — between architecture, nature, body and stillness. Luxury grounded in quiet, proportion and detail.</p>
-      <span class="rv" style="transition-delay:1.12s">
+      <div>
+        <p class="lede rv" style="transition-delay:1s">A collection of resort and leisure real estate projects shaped by architecture, nature, privacy and long-term value.</p>
+        <p class="mono rv" style="transition-delay:1.16s;color:var(--faint);margin-top:20px;line-height:2">Tatrzańska&nbsp;Poronin&nbsp;·&nbsp;Partercznik&nbsp;Hills&nbsp;·&nbsp;Osada&nbsp;Kościelisko&nbsp;·&nbsp;Osada&nbsp;Juno</p>
+      </div>
+      <div class="rv" style="transition-delay:1.2s;display:flex;flex-direction:column;gap:12px;align-items:flex-end">
         <button class="cta" data-cursor data-enter>
-          <span class="lbl">Explore&nbsp;the&nbsp;experience</span><span class="fill"></span>
-          <span class="lbl2">Explore&nbsp;the&nbsp;experience</span>
+          <span class="lbl">Explore&nbsp;investments</span><span class="fill"></span>
+          <span class="lbl2">Explore&nbsp;investments</span>
         </button>
-      </span>
+        <button class="cta" data-cursor style="opacity:.6">
+          <span class="lbl">Contact&nbsp;us</span><span class="fill"></span>
+          <span class="lbl2">Contact&nbsp;us</span>
+        </button>
+      </div>
     </div>
     <div class="hfoot">
-      <span class="mono faint rv" style="transition-delay:1.24s">Holistone&nbsp;Resorts</span>
-      <span class="mono faint rv" style="transition-delay:1.24s">Scroll&nbsp;<span class="arr">↓</span></span>
+      <span class="mono faint rv" style="transition-delay:1.32s">4&nbsp;investments&nbsp;in&nbsp;preparation</span>
+      <span class="mono faint rv" style="transition-delay:1.32s">Scroll&nbsp;<span class="arr">↓</span></span>
     </div>
   </section>
 
-  <!-- INTRO -->
-  <section class="intro" id="intro">
-    <svg class="orbit" viewBox="0 0 1200 600" preserveAspectRatio="none"><ellipse cx="600" cy="300" rx="560" ry="220"/></svg>
-    <div class="peek pk3"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-    <div class="bigtype">
-      <span class="ex">Explore</span><span class="pl">Places</span>
-      <div class="nev"><span class="l">Not</span><span class="l">Everything</span><span class="l">is Visible</span></div>
-    </div>
-  </section>
 
-  <!-- SLIDER -->
+<!-- SLIDER -->
   <section class="scrollwrap" id="scrollwrap">
     <div class="sticky">
       <div class="smalltype"><span class="l">Not</span><span class="l">Everything</span><span class="l">is Visible</span></div>
@@ -364,32 +400,101 @@
     </div>
   </section>
 
+  <!-- UPCOMING INVESTMENTS -->
+  <section class="sec" id="investments">
+    <div class="sec-inner">
+      <div class="divline"></div>
+      <span class="mono sec-tag sr">Portfolio</span>
+      <h2 class="sec-h sr">Upcoming<br><em>investments.</em></h2>
+      <p class="sec-p sr" style="transition-delay:.1s">A growing collection of resort and leisure real estate projects, each shaped by its location, architecture and natural surroundings.</p>
+      <div class="inv-grid">
+        <div class="inv-card sr">
+          <h3 class="inv-title">Tatrzańska Poronin</h3>
+          <div class="inv-meta">
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Location</span><span class="inv-meta-value">Poronin, ul. Tatrzańska</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Property type</span><span class="inv-meta-value">Single-family houses</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">PUM</span><span class="inv-meta-value">XXX m²</span></div>
+          </div>
+          <p class="inv-desc">A calm residential concept in the Tatra region, designed around privacy, mountain landscape and the rhythm of nature.</p>
+          <span class="mono inv-badge">In preparation</span>
+        </div>
+        <div class="inv-card sr" style="transition-delay:.08s">
+          <h3 class="inv-title">Partercznik Hills</h3>
+          <div class="inv-meta">
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Location</span><span class="inv-meta-value">Wisła</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Property type</span><span class="inv-meta-value">Investment apartments</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">PUM</span><span class="inv-meta-value">XXX m²</span></div>
+          </div>
+          <p class="inv-desc">A mountain apartment project combining leisure potential, investment value and a refined resort character.</p>
+          <span class="mono inv-badge">In preparation</span>
+        </div>
+        <div class="inv-card sr" style="transition-delay:.04s">
+          <h3 class="inv-title">Osada Kościelisko</h3>
+          <div class="inv-meta">
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Location</span><span class="inv-meta-value">Kościelisko</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Property type</span><span class="inv-meta-value">Single-family houses</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">PUM</span><span class="inv-meta-value">XXX m²</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">LU</span><span class="inv-meta-value">XXX m²</span></div>
+          </div>
+          <p class="inv-desc">A private residential estate in one of the most distinctive locations in Podhale, rooted in landscape, privacy and architectural calm.</p>
+          <span class="mono inv-badge">In preparation</span>
+        </div>
+        <div class="inv-card sr" style="transition-delay:.12s">
+          <h3 class="inv-title">Osada Juno</h3>
+          <div class="inv-meta">
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Location</span><span class="inv-meta-value">Szestno</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">Property type</span><span class="inv-meta-value">Single-family houses, residences, boutique hotel, business hotel</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">PUM</span><span class="inv-meta-value">XXX m²</span></div>
+            <div class="inv-meta-row"><span class="mono inv-meta-label">LU</span><span class="inv-meta-value">XXX m²</span></div>
+          </div>
+          <p class="inv-desc">A larger resort concept combining residential, hospitality and leisure functions within one cohesive destination.</p>
+          <span class="mono inv-badge">In preparation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ONE BRAND -->
+  <section class="sec sec-dark">
+    <div class="sec-inner">
+      <div class="divline"></div>
+      <span class="mono sec-tag sr">Brand philosophy</span>
+      <h2 class="sec-h sr">One brand.<br><em>Different places.</em><br>A shared philosophy.</h2>
+      <p class="onebrand-body sr" style="transition-delay:.12s">Each Holistone Resorts investment responds to the character of its location. A house in Poronin, an apartment project in Wisła, a private estate in Kościelisko and a resort concept in Szestno require different architectural answers — but they all share the same foundation: nature, proportion, materiality, privacy and calm.</p>
+    </div>
+  </section>
+
   <!-- 02 PILLARS -->
   <section class="sec">
     <div class="sec-inner">
       <div class="divline"></div>
-      <span class="mono sec-tag sr">02 — Foundation</span>
-      <h2 class="sec-h sr">Four elements<br><em>of balance.</em></h2>
+      <span class="mono sec-tag sr">The Holistone standard</span>
+      <h2 class="sec-h sr">What every<br><em>project shares.</em></h2>
       <div class="pillars-grid">
         <div class="pillar sr">
           <span class="mono pillar-num">01</span>
           <h3>Nature</h3>
-          <p>Organic rhythm, light, surroundings and the natural softness of a place.</p>
+          <p>Landscape, light and natural rhythm as the starting point of each project.</p>
         </div>
         <div class="pillar sr" style="transition-delay:.08s">
           <span class="mono pillar-num">02</span>
           <h3>Architecture</h3>
-          <p>Proportion, form and space designed with stillness in mind.</p>
+          <p>Proportion, structure and timeless form shaped around the place.</p>
         </div>
         <div class="pillar sr" style="transition-delay:.16s">
           <span class="mono pillar-num">03</span>
-          <h3>Wellbeing</h3>
-          <p>Restoration, silence, rituals and experiences for body and mind.</p>
+          <h3>Privacy</h3>
+          <p>Spaces designed for comfort, quietness and a sense of retreat.</p>
         </div>
         <div class="pillar sr" style="transition-delay:.24s">
           <span class="mono pillar-num">04</span>
           <h3>Materiality</h3>
-          <p>Stone, metal, texture, light and details that build the character of a place.</p>
+          <p>Stone, wood, metal, glass and tactile surfaces used with restraint.</p>
+        </div>
+        <div class="pillar sr" style="transition-delay:.32s">
+          <span class="mono pillar-num">05</span>
+          <h3>Long-term value</h3>
+          <p>Projects created with architectural quality, location potential and lasting relevance in mind.</p>
         </div>
       </div>
     </div>
@@ -500,6 +605,57 @@
     </div>
   </section>
 
+  <!-- LOCATIONS -->
+  <section class="sec">
+    <div class="sec-inner">
+      <div class="divline"></div>
+      <span class="mono sec-tag sr">Locations</span>
+      <h2 class="sec-h sr">Locations that define<br><em>the experience.</em></h2>
+      <p class="sec-p sr" style="transition-delay:.1s">Holistone Resorts projects are developed in destinations with strong leisure, landscape and investment potential. Each location gives the project its own rhythm, atmosphere and architectural direction.</p>
+      <div class="loc-row sr" style="transition-delay:.14s">
+        <span class="loc-item">Poronin</span>
+        <span class="loc-sep">—</span>
+        <span class="loc-item">Wisła</span>
+        <span class="loc-sep">—</span>
+        <span class="loc-item">Kościelisko</span>
+        <span class="loc-sep">—</span>
+        <span class="loc-item">Szestno</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVESTMENT STATUS -->
+  <section class="sec sec-dark">
+    <div class="sec-inner">
+      <div class="divline"></div>
+      <span class="mono sec-tag sr">Current stage</span>
+      <h2 class="sec-h sr">Projects<br><em>in preparation.</em></h2>
+      <p class="sec-p sr" style="transition-delay:.1s">The Holistone Resorts portfolio currently includes projects in preparation. Detailed information about areas, availability, timelines and investment standards will be introduced as each project moves into the next stage.</p>
+      <div class="status-proj-grid sr" style="transition-delay:.14s">
+        <div class="status-card">
+          <div class="status-name">Tatrzańska Poronin</div>
+          <div class="mono status-loc">Poronin</div>
+          <span class="mono status-pill">In preparation</span>
+        </div>
+        <div class="status-card">
+          <div class="status-name">Partercznik Hills</div>
+          <div class="mono status-loc">Wisła</div>
+          <span class="mono status-pill">In preparation</span>
+        </div>
+        <div class="status-card">
+          <div class="status-name">Osada Kościelisko</div>
+          <div class="mono status-loc">Kościelisko</div>
+          <span class="mono status-pill">In preparation</span>
+        </div>
+        <div class="status-card">
+          <div class="status-name">Osada Juno</div>
+          <div class="mono status-loc">Szestno</div>
+          <span class="mono status-pill">In preparation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 08 GALLERY -->
   <section class="sec">
     <div class="sec-inner">
@@ -538,15 +694,16 @@
   <section class="sec">
     <div class="sec-inner">
       <div class="divline"></div>
-      <span class="mono sec-tag sr">10 — Vision</span>
-      <div class="about-grid">
-        <div>
-          <h2 class="sec-h sr">Created for places<br><em>that last.</em></h2>
-          <p class="sec-p sr" style="transition-delay:.1s">Holistone Resorts is built with timeless places in mind — ones that unite architecture, nature, quality of craft and the experience of a stay.</p>
-          <p class="sec-p sr" style="transition-delay:.16s;margin-top:16px">The brand builds resorts not only to be visited, but to be remembered. By Kaliński Invest.</p>
+      <span class="mono sec-tag sr">Developer</span>
+      <div class="dev-grid">
+        <div class="sr">
+          <div class="dev-name">Kaliński<br>Invest</div>
+          <div class="mono dev-sub" style="margin-top:16px">Developer</div>
         </div>
         <div>
-          <ul class="values-list sr" style="transition-delay:.1s">
+          <h2 class="sec-h sr">Developed by<br><em>Kaliński Invest.</em></h2>
+          <p class="sec-p sr" style="transition-delay:.1s">Holistone Resorts is developed by Kaliński Invest as a dedicated brand for resort, leisure and premium real estate projects. It brings together architectural ambition, location potential and a long-term approach to value.</p>
+          <ul class="values-list sr" style="transition-delay:.16s">
             <li>Stillness and balance</li>
             <li>Quality of material and detail</li>
             <li>Responsibility toward the place</li>
@@ -561,16 +718,16 @@
   <!-- 11 FINAL CTA -->
   <section class="final">
     <div class="divline"></div>
-    <h2 class="big-h sr">Begin with<br><em>balance.</em></h2>
-    <p class="sec-p sr" style="transition-delay:.1s">Discover Holistone Resorts — places created for stillness, restoration and a conscious experience of luxury.</p>
+    <h2 class="big-h sr">Discover the<br><em>upcoming investments.</em></h2>
+    <p class="sec-p sr" style="transition-delay:.1s">Contact us to learn more about the projects currently in preparation, their locations and the next stages of development.</p>
     <div class="cta-row sr" style="transition-delay:.2s">
       <button class="cta" data-cursor data-enter>
-        <span class="lbl">Request information</span><span class="fill"></span>
-        <span class="lbl2">Request information</span>
+        <span class="lbl">Contact us</span><span class="fill"></span>
+        <span class="lbl2">Contact us</span>
       </button>
       <button class="cta" data-cursor>
-        <span class="lbl">Explore the resort</span><span class="fill"></span>
-        <span class="lbl2">Explore the resort</span>
+        <span class="lbl">Explore investments</span><span class="fill"></span>
+        <span class="lbl2">Explore investments</span>
       </button>
     </div>
   </section>
@@ -580,15 +737,15 @@
     <div class="ovtop"><span class="mono">Holistone&nbsp;Resorts</span>
       <button class="send" id="closeBtn" data-cursor>Close /</button></div>
     <nav class="navm"><ul>
-      <li><a href="#" data-cursor><span class="idx">01</span><span class="lab">Experience</span></a></li>
+      <li><a href="#investments" data-cursor><span class="idx">01</span><span class="lab">Investments</span></a></li>
       <li><a href="#" data-cursor><span class="idx">02</span><span class="lab">Spaces</span></a></li>
       <li><a href="#" data-cursor><span class="idx">03</span><span class="lab">Wellbeing</span></a></li>
-      <li><a href="#" data-cursor><span class="idx">04</span><span class="lab">About</span></a></li>
+      <li><a href="#" data-cursor><span class="idx">04</span><span class="lab">Contact</span></a></li>
     </ul></nav>
     <div class="ovbottom">
-      <div class="col"><span class="mono">Access</span><p>Access is personal, not assumed. <a href="#" data-cursor>Request introduction →</a></p></div>
-      <div class="col"><span class="mono">Resorts</span><p>Holistic luxury · architecture · nature · stillness</p></div>
-      <div class="col"><span class="mono">By Kaliński Invest</span><p>Places built to last — created with intention.</p></div>
+      <div class="col"><span class="mono">Portfolio</span><p>4 investments in preparation. <a href="#investments" data-cursor>Explore projects →</a></p></div>
+      <div class="col"><span class="mono">Locations</span><p>Poronin · Wisła · Kościelisko · Szestno</p></div>
+      <div class="col"><span class="mono">By Kaliński Invest</span><p>Resort & leisure real estate, developed with long-term value in mind.</p></div>
     </div>
   </div>
 
@@ -639,16 +796,25 @@
 
   /* scroll scrub */
   const wrap=document.getElementById('scrollwrap'),slider=document.getElementById('slider');
+  const tiles=[...document.querySelectorAll('.tile')];
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
   function onScroll(){
     document.body.classList.toggle('scrolled',scrollY>40);
     const r=wrap.getBoundingClientRect();
     const total=wrap.offsetHeight-innerHeight;
     const p=clamp(-r.top/total,0,1);
-    slider.style.width=(40+p*18)+'%';
-    slider.style.height=(50+p*22)+'%';
+    const e=ease(p);
+    /* slider grows from 28%×38% to 96%×96% */
+    slider.style.width=(28+e*68)+'%';
+    slider.style.height=(38+e*58)+'%';
+    slider.style.borderRadius=(14-e*14)+'px';
+    /* tiles + text fade out */
+    const fade=clamp(1-p*2.2,0,1);
+    tiles.forEach(t=>t.style.opacity=fade);
     const st=document.querySelector('.smalltype');
-    if(st)st.style.opacity=clamp(1-p*1.6,0,1);
+    if(st)st.style.opacity=clamp(1-p*2,0,1);
+    /* slide change */
     if(r.top<innerHeight&&r.bottom>0){
       const want=clamp(Math.round(p*(places.length-1)),0,places.length-1);
       if(want!==idx)set(want);
