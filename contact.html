@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Contact — Holistone Resorts</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Archivo:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--ink:#E3DAD4;--dim:#A69F9B;--faint:#685E58;--line:rgba(140,116,102,.30);--gold:#CBB5A7}
+  *{margin:0;padding:0;box-sizing:border-box}
+  @media(hover:hover){*{cursor:none}}
+  body{color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;
+    background:#1C1512;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+  .mono{font-family:'Archivo',sans-serif;letter-spacing:.22em;text-transform:uppercase;font-size:10px}
+
+  /* overlays */
+  #grain,#vig{position:fixed;inset:0;pointer-events:none;z-index:60}
+  #vig{box-shadow:inset 0 0 280px 60px rgba(0,0,0,.55)}
+  #grain{opacity:.07;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:drift 12s ease-in-out infinite}
+  @keyframes drift{0%{transform:translate(0,0)}50%{transform:translate(-1.5%,-1%)}100%{transform:translate(0,0)}}
+
+  /* cursor */
+  #cur{position:fixed;top:0;left:0;z-index:70;pointer-events:none;mix-blend-mode:difference}
+  #ring{width:32px;height:32px;border:1px solid #fff;border-radius:50%;transform:translate(-50%,-50%);
+    transition:width .35s,height .35s,background .35s}
+  #ring.big{width:90px;height:90px;background:#fff}
+  #ringtxt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    font-family:'Archivo',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+    color:#000;opacity:0;transition:opacity .3s;white-space:nowrap}
+  #ring.big #ringtxt{opacity:1}
+  #dot{position:fixed;top:0;left:0;width:4px;height:4px;background:#fff;border-radius:50%;
+    transform:translate(-50%,-50%);z-index:70;pointer-events:none;mix-blend-mode:difference}
+
+  /* topbar */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:55;display:flex;align-items:center;
+    justify-content:space-between;padding:20px 32px;
+    background:linear-gradient(180deg,rgba(20,18,19,.94),rgba(20,18,19,.0));
+    transition:background .5s}
+  .brand{font-family:'Archivo',sans-serif;letter-spacing:.28em;text-transform:uppercase;font-size:11px;color:var(--ink);text-decoration:none}
+  .right{display:flex;align-items:center;gap:14px}
+  .send{padding:12px 24px;color:var(--ink);background:rgba(255,255,255,.05);border:none;
+    font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    border-radius:9px;transition:background .3s;cursor:none}
+  .send:hover{background:rgba(255,255,255,.13)}
+  .lang-sw{display:flex;align-items:center;gap:2px}
+  .lang-btn{background:none;border:none;font-family:'Archivo',sans-serif;font-size:10px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--faint);cursor:none;
+    padding:6px 4px;transition:color .3s}
+  .lang-btn.active{color:var(--ink)}
+  .lang-sep{color:var(--faint);font-size:10px;font-family:'Archivo',sans-serif}
+
+  /* page layout */
+  .contact-page{min-height:100vh;display:flex;flex-direction:column;
+    padding:clamp(100px,12vh,140px) clamp(24px,5vw,80px) clamp(60px,8vh,100px)}
+
+  /* heading */
+  .contact-tag{display:block;margin-bottom:clamp(24px,3vw,40px);color:var(--faint)}
+  .contact-h{font-weight:300;font-size:clamp(3.5rem,10vw,9rem);line-height:.9;letter-spacing:-.03em;
+    margin-bottom:clamp(48px,7vw,96px)}
+  .contact-h em{font-style:italic;color:var(--dim)}
+
+  /* divider */
+  .divline{width:100%;height:1px;background:var(--line);margin-bottom:clamp(32px,4vw,60px)}
+
+  /* grid */
+  .contact-grid{display:grid;gap:clamp(48px,7vw,100px);align-items:start;flex:1}
+  @media(min-width:900px){.contact-grid{grid-template-columns:1fr 1fr}}
+
+  /* info column */
+  .info-label{display:block;color:var(--faint);margin-bottom:clamp(32px,4vw,56px)}
+  .info-block{margin-bottom:clamp(32px,4vw,52px)}
+  .info-block:last-child{margin-bottom:0}
+  .info-block .info-title{display:block;color:var(--faint);margin-bottom:10px;font-size:9px}
+  .info-block .info-val{font-weight:300;font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.5;color:var(--ink)}
+  .info-block a{color:var(--dim);text-decoration:none;transition:color .3s}
+  .info-block a:hover{color:var(--gold)}
+  .info-divider{width:100%;height:1px;background:var(--line);margin:clamp(28px,3.5vw,48px) 0}
+
+  /* form */
+  .form-label{display:block;color:var(--faint);margin-bottom:clamp(28px,4vw,48px)}
+  .field{margin-bottom:clamp(20px,2.5vw,32px)}
+  .field label{display:block;font-family:'Archivo',sans-serif;font-size:9px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .field input,.field textarea,.field select{
+    width:100%;background:none;border:none;border-bottom:1px solid var(--line);
+    padding:10px 0 14px;color:var(--ink);
+    font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:clamp(1rem,1.4vw,1.2rem);
+    outline:none;transition:border-color .3s;resize:none;cursor:none;
+    -webkit-appearance:none}
+  .field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+  .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
+  .field select{color:var(--dim)}
+  .field select option{background:#1C1512;color:var(--ink)}
+  .field textarea{min-height:120px;line-height:1.5}
+
+  /* submit */
+  .form-submit{margin-top:clamp(28px,3vw,44px)}
+  .cta{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:999px;
+    padding:17px 40px;background:none;color:var(--ink);font-family:'Archivo',sans-serif;
+    letter-spacing:.24em;text-transform:uppercase;font-size:10px;cursor:none}
+  .cta .lbl{position:relative;z-index:2;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+  .cta .fill{position:absolute;left:50%;top:50%;width:0;height:0;background:var(--ink);border-radius:50%;
+    transform:translate(-50%,-50%);transition:width .6s cubic-bezier(.16,1,.3,1),height .6s cubic-bezier(.16,1,.3,1)}
+  .cta .lbl2{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;
+    color:#151415;opacity:0;transition:opacity .4s;letter-spacing:.24em}
+  .cta:hover .fill{width:240%;height:600%}
+  .cta:hover .lbl{transform:translateY(-130%)}.cta:hover .lbl2{opacity:1}
+
+  /* success state */
+  .form-success{display:none;padding:clamp(24px,3vw,40px);border:1px solid var(--line);
+    border-radius:12px;text-align:center}
+  .form-success.show{display:block}
+  .form-success p{font-weight:300;font-size:1.2rem;color:var(--dim);line-height:1.5}
+  .form-success .big{display:block;font-size:clamp(2rem,4vw,3.5rem);color:var(--ink);
+    font-weight:300;letter-spacing:-.02em;margin-bottom:12px}
+
+  /* rv animation */
+  .rv{opacity:0;transform:translateY(20px);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1)}
+  body.in .rv{opacity:1;transform:translateY(0)}
+
+  /* footer strip */
+  .contact-footer{margin-top:clamp(48px,6vw,80px);padding-top:clamp(20px,2.5vw,32px);
+    border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .contact-footer span{color:var(--faint);font-size:.85rem;font-weight:300}
+  .contact-footer a{color:var(--faint);text-decoration:none;font-size:.85rem;font-weight:300;transition:color .3s}
+  .contact-footer a:hover{color:var(--dim)}
+</style>
+</head>
+<body>
+  <div id="vig"></div><div id="grain"></div>
+  <div id="cur"><div id="ring"><span id="ringtxt">Send</span></div></div><div id="dot"></div>
+
+  <header class="topbar">
+    <a href="index.html" class="brand" data-cursor>Holistone</a>
+    <div class="right">
+      <div class="lang-sw">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-btn" data-lang="pl">PL</button>
+      </div>
+      <a href="index.html" class="send" data-cursor data-en="Back to site" data-pl="Wróć na stronę">Back to site</a>
+    </div>
+  </header>
+
+  <main class="contact-page">
+    <span class="mono contact-tag rv" data-en="Contact" data-pl="Kontakt">Contact</span>
+    <h1 class="contact-h rv" style="transition-delay:.1s">
+      <span data-en="Let's talk" data-pl="Porozmawiajmy">Let's talk</span><br>
+      <em><span data-en="about your stay." data-pl="o Twoim pobycie.">about your stay.</span></em>
+    </h1>
+
+    <div class="divline rv" style="transition-delay:.18s"></div>
+
+    <div class="contact-grid rv" style="transition-delay:.24s">
+
+      <!-- LEFT: info -->
+      <div>
+        <span class="mono info-label" data-en="Our details" data-pl="Nasze dane">Our details</span>
+
+        <div class="info-block">
+          <span class="mono info-title" data-en="General enquiries" data-pl="Zapytania ogólne">General enquiries</span>
+          <span class="info-val"><a href="mailto:hello@holistone-resorts.com">hello@holistone-resorts.com</a></span>
+        </div>
+
+        <div class="info-block">
+          <span class="mono info-title" data-en="Investment enquiries" data-pl="Zapytania inwestycyjne">Investment enquiries</span>
+          <span class="info-val"><a href="mailto:invest@holistone-resorts.com">invest@holistone-resorts.com</a></span>
+        </div>
+
+        <div class="info-block">
+          <span class="mono info-title" data-en="Phone" data-pl="Telefon">Phone</span>
+          <span class="info-val"><a href="tel:+48221234567">+48 22 123 45 67</a></span>
+        </div>
+
+        <div class="info-divider"></div>
+
+        <div class="info-block">
+          <span class="mono info-title" data-en="Developer" data-pl="Deweloper">Developer</span>
+          <span class="info-val" style="color:var(--dim)">Kaliński Invest<br>
+            <span style="font-size:.95rem;color:var(--faint)">ul. Marszałkowska 10<br>00-590 Warszawa</span>
+          </span>
+        </div>
+
+        <div class="info-divider"></div>
+
+        <div class="info-block">
+          <span class="mono info-title" data-en="Website" data-pl="Strona internetowa">Website</span>
+          <span class="info-val"><a href="https://holistone-resorts.com" target="_blank">holistone-resorts.com</a></span>
+        </div>
+      </div>
+
+      <!-- RIGHT: form -->
+      <div>
+        <span class="mono form-label" data-en="Send a message" data-pl="Wyślij wiadomość">Send a message</span>
+
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label data-en="Full name" data-pl="Imię i nazwisko">Full name</label>
+            <input type="text" name="name" placeholder="Jan Kowalski" required />
+          </div>
+          <div class="field">
+            <label data-en="Email address" data-pl="Adres e-mail">Email address</label>
+            <input type="email" name="email" placeholder="jan@example.com" required />
+          </div>
+          <div class="field">
+            <label data-en="Subject" data-pl="Temat">Subject</label>
+            <select name="subject">
+              <option value="" data-en="— Select —" data-pl="— Wybierz —">— Select —</option>
+              <option value="stay" data-en="Resort stay enquiry" data-pl="Zapytanie o pobyt">Resort stay enquiry</option>
+              <option value="invest" data-en="Investment information" data-pl="Informacje inwestycyjne">Investment information</option>
+              <option value="press" data-en="Press &amp; media" data-pl="Prasa i media">Press &amp; media</option>
+              <option value="other" data-en="Other" data-pl="Inne">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label data-en="Message" data-pl="Wiadomość">Message</label>
+            <textarea name="message" placeholder="..." rows="5"></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="cta" data-cursor>
+              <span class="lbl" data-en="Send message" data-pl="Wyślij wiadomość">Send message</span>
+              <span class="fill"></span>
+              <span class="lbl2" data-en="Send message" data-pl="Wyślij wiadomość">Send message</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <span class="big" data-en="Thank you." data-pl="Dziękujemy.">Thank you.</span>
+          <p data-en="We've received your message and will be in touch shortly." data-pl="Otrzymaliśmy Twoją wiadomość i skontaktujemy się wkrótce.">We've received your message and will be in touch shortly.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="contact-footer rv" style="transition-delay:.32s">
+      <span>© 2025 Holistone Resorts · <span data-en="by" data-pl="by">by</span> Kaliński Invest</span>
+      <a href="index.html" data-cursor data-en="← Back to main site" data-pl="← Wróć na stronę główną">← Back to main site</a>
+    </div>
+  </main>
+
+<script>
+  /* cursor */
+  const ring=document.getElementById('ring'),dot=document.getElementById('dot'),rt=document.getElementById('ringtxt');
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+  });
+  (function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;
+    ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';requestAnimationFrame(loop)})();
+  document.querySelectorAll('[data-cursor]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+  });
+
+  /* scroll */
+  addEventListener('scroll',()=>document.body.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+  /* page in */
+  requestAnimationFrame(()=>setTimeout(()=>document.body.classList.add('in'),60));
+
+  /* form */
+  document.getElementById('contactForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    this.style.display='none';
+    const s=document.getElementById('formSuccess');
+    s.classList.add('show');
+    /* apply current lang text to success box */
+    s.querySelectorAll('[data-en]').forEach(el=>{
+      const lang=localStorage.getItem('hl_lang')||'en';
+      el.textContent=lang==='pl'?(el.dataset.pl||el.dataset.en):el.dataset.en;
+    });
+  });
+
+  /* language switcher */
+  function applyLang(lang){
+    document.querySelectorAll('[data-en]').forEach(el=>{
+      if(el.tagName==='OPTION'){
+        el.textContent=lang==='pl'?(el.dataset.pl||el.dataset.en):el.dataset.en;
+      } else {
+        el.textContent=lang==='pl'?(el.dataset.pl||el.dataset.en):el.dataset.en;
+      }
+    });
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+    document.documentElement.lang=lang;
+    localStorage.setItem('hl_lang',lang);
+  }
+  document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+  const saved=localStorage.getItem('hl_lang');
+  if(saved&&saved!=='en')applyLang(saved);
+</script>
+</body>
+</html>
