@@ -277,6 +277,26 @@
   .ovbottom .col{max-width:22rem}
   .ovbottom .col p{font-size:1.05rem;font-weight:300;line-height:1.4;color:var(--dim)}
   .ovbottom .col .mono{display:block;margin-bottom:10px;color:var(--faint)}
+
+  /* ── LOCATION STAGE ── */
+  .loc-stage{position:relative;margin-top:clamp(48px,6vw,96px);overflow:hidden;border:1px solid var(--line)}
+  .loc-stage-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(203,181,167,.06) 0%,transparent 70%);opacity:0;transition:opacity .6s,transform .6s;pointer-events:none;transform:scale(1.1)}
+  .loc-stage-items{display:flex;flex-direction:column}
+  .loc-stage-item{display:flex;align-items:center;gap:clamp(16px,2.5vw,40px);padding:clamp(20px,3vw,40px) clamp(24px,4vw,60px);border-bottom:1px solid var(--line);cursor:default;position:relative;transition:background .4s}
+  .loc-stage-item:last-child{border-bottom:none}
+  .loc-stage-item::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+  .loc-stage-item:hover{background:rgba(203,181,167,.03)}
+  .loc-stage-item:hover::after{transform:scaleY(1)}
+  .loc-stage-num{color:var(--faint);font-size:.75rem;width:32px;flex-shrink:0;transition:color .4s}
+  .loc-stage-item:hover .loc-stage-num{color:var(--gold)}
+  .loc-stage-name{font-weight:300;font-size:clamp(2.4rem,6vw,6.5rem);letter-spacing:-.03em;line-height:1;color:var(--ink);opacity:.22;transition:opacity .5s,letter-spacing .5s}
+  .loc-stage-item:hover .loc-stage-name{opacity:1;letter-spacing:-.04em}
+  .loc-stage-foot{display:flex;justify-content:space-between;padding:clamp(14px,2vw,24px) clamp(24px,4vw,60px);border-top:1px solid var(--line);background:rgba(0,0,0,.2)}
+
+  /* ── PARALLAX ── */
+  .p-img{overflow:hidden}
+  .p-img > *{will-change:transform;transform:scale(1.14) translateY(0);transition:none}
+  [data-pf]{will-change:transform}
 </style>
 </head>
 <body>
@@ -317,7 +337,7 @@
   <!-- INTRO -->
   <section class="intro" id="intro">
     <svg class="orbit" viewBox="0 0 1200 600" preserveAspectRatio="none"><ellipse cx="600" cy="300" rx="560" ry="220"/></svg>
-    <div class="peek pk3"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+    <div class="peek pk3"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
     <div class="bigtype">
       <span class="ex">Explore</span><span class="pl">Places</span>
       <div class="nev"><span class="l">Not</span><span class="l">Everything</span><span class="l">is Visible</span></div>
@@ -328,12 +348,12 @@
   <section class="scrollwrap" id="scrollwrap">
     <div class="sticky">
       <div class="smalltype"><span class="l">Not</span><span class="l">Everything</span><span class="l">is Visible</span></div>
-      <div class="tile t1 par" data-depth="14"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-      <div class="tile t2 par" data-depth="22"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-      <div class="tile t3 par" data-depth="30"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-      <div class="tile t4 par" data-depth="18"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-      <div class="tile t5 par" data-depth="26"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-      <div class="tile t6 par" data-depth="34"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+      <div class="tile t1 par" data-depth="14"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+      <div class="tile t2 par" data-depth="22"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+      <div class="tile t3 par" data-depth="30"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+      <div class="tile t4 par" data-depth="18"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+      <div class="tile t5 par" data-depth="26"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+      <div class="tile t6 par" data-depth="34"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
       <div class="slider" id="slider">
         <div id="slides"></div>
         <h3 class="place" id="place">The Atrium</h3>
@@ -354,11 +374,11 @@
       <span class="mono sec-tag sr">01 — Philosophy</span>
       <div class="manifesto-grid">
         <div>
-          <h2 class="sec-h sr">Luxury,<br><em>without</em><br>excess.</h2>
+          <h2 class="sec-h sr" data-pf="0.04">Luxury,<br><em>without</em><br>excess.</h2>
           <p class="sec-p sr" style="transition-delay:.12s">Holistone does not design places that demand attention. It designs spaces that allow you to slow down. Every detail — from light, through stone, to the layout of space — is meant to build a sense of calm, privacy and connection with the place.</p>
         </div>
-        <div class="manifesto-img sr" style="transition-delay:.08s">
-          <div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div>
+        <div class="manifesto-img p-img sr" style="transition-delay:.08s">
+          <div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div>
         </div>
       </div>
     </div>
@@ -369,7 +389,7 @@
     <div class="sec-inner">
       <div class="divline"></div>
       <span class="mono sec-tag sr">02 — Foundation</span>
-      <h2 class="sec-h sr">Four elements<br><em>of balance.</em></h2>
+      <h2 class="sec-h sr" data-pf="0.04">Four elements<br><em>of balance.</em></h2>
       <div class="pillars-grid">
         <div class="pillar sr">
           <span class="mono pillar-num">01</span>
@@ -400,7 +420,7 @@
     <div class="sec-inner">
       <div class="divline"></div>
       <span class="mono sec-tag sr">03 — Experience</span>
-      <h2 class="sec-h sr">A resort experience<br><em>designed to restore.</em></h2>
+      <h2 class="sec-h sr" data-pf="0.04">A resort experience<br><em>designed to restore.</em></h2>
       <p class="sec-p sr" style="transition-delay:.1s">A stay at Holistone moves from stillness to restoration. Morning light, quiet architecture, contact with nature, wellbeing rituals and privacy — everything works in concert.</p>
       <div class="exp-grid">
         <div class="exp-item sr"><span class="mono exp-dash">—</span><h4>Morning light</h4><p>Every morning in natural light, without rush.</p></div>
@@ -418,17 +438,17 @@
     <div class="sec-inner">
       <div class="divline"></div>
       <span class="mono sec-tag sr">04 — Design</span>
-      <h2 class="sec-h sr">Architecture that<br><em>listens to nature.</em></h2>
+      <h2 class="sec-h sr" data-pf="0.04">Architecture that<br><em>listens to nature.</em></h2>
       <p class="sec-p sr" style="transition-delay:.1s">Holistone unites architectural precision with natural materials. Stone, warm metals, soft light and restrained tones create spaces that are elegant without excess.</p>
       <div class="arch-grid sr" style="transition-delay:.12s">
-        <div class="arch-main"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+        <div class="arch-main p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
         <div class="arch-side">
-          <div class="arch-side-img"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-          <div class="arch-side-img"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+          <div class="arch-side-img p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+          <div class="arch-side-img p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
         </div>
         <div class="arch-side">
-          <div class="arch-side-img"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-          <div class="arch-side-img"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+          <div class="arch-side-img p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+          <div class="arch-side-img p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
         </div>
       </div>
     </div>
@@ -439,19 +459,19 @@
     <div class="sec-inner">
       <div class="divline"></div>
       <span class="mono sec-tag sr">05 — Spaces</span>
-      <h2 class="sec-h sr">Private spaces,<br><em>shaped for stillness.</em></h2>
+      <h2 class="sec-h sr" data-pf="0.04">Private spaces,<br><em>shaped for stillness.</em></h2>
       <p class="sec-p sr" style="transition-delay:.1s">Every Holistone space is designed to bring together privacy, comfort and connection with the surroundings. Places made for rest, not for excess.</p>
       <div class="res-grid">
         <div class="res-card sr">
-          <div class="res-card-img"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+          <div class="res-card-img p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
           <div class="res-card-body"><span class="mono res-card-num">01</span><h4>Suite</h4><p>A space for deep rest with views onto nature.</p></div>
         </div>
         <div class="res-card sr" style="transition-delay:.1s">
-          <div class="res-card-img"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+          <div class="res-card-img p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
           <div class="res-card-body"><span class="mono res-card-num">02</span><h4>Villa</h4><p>A private villa with gardens and complete separation from the outside world.</p></div>
         </div>
         <div class="res-card sr" style="transition-delay:.2s">
-          <div class="res-card-img"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+          <div class="res-card-img p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
           <div class="res-card-body"><span class="mono res-card-num">03</span><h4>Residence</h4><p>An expansive residence designed for a longer, unhurried stay.</p></div>
         </div>
       </div>
@@ -463,7 +483,7 @@
     <div class="sec-inner">
       <div class="divline"></div>
       <span class="mono sec-tag sr">06 — Wellbeing</span>
-      <h2 class="sec-h sr">Wellbeing,<br><em>in its quiet form.</em></h2>
+      <h2 class="sec-h sr" data-pf="0.04">Wellbeing,<br><em>in its quiet form.</em></h2>
       <div class="well-layout">
         <div>
           <p class="sec-p sr">Holistone treats wellbeing as part of daily life — not as an add-on. Silence, temperature, light, scent, materials and restorative rituals create an experience of balance.</p>
@@ -476,8 +496,8 @@
             <li>Slow food & nutrition<span class="mono">Nourish</span></li>
           </ul>
         </div>
-        <div class="well-img sr" style="transition-delay:.14s">
-          <div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div>
+        <div class="well-img p-img sr" style="transition-delay:.14s">
+          <div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div>
         </div>
       </div>
     </div>
@@ -488,13 +508,31 @@
     <div class="sec-inner">
       <div class="divline"></div>
       <span class="mono sec-tag sr">07 — Place</span>
-      <h2 class="sec-h sr">Deeply connected<br><em>to the sense of place.</em></h2>
+      <h2 class="sec-h sr" data-pf="0.04">Deeply connected<br><em>to the sense of place.</em></h2>
       <p class="sec-p sr" style="transition-delay:.1s">Holistone does not separate itself from nature. Each resort grows from the place in which it is built — from its light, landscape, materials and rhythm.</p>
-      <div class="nature-fullbleed sr" style="transition-delay:.14s">
-        <div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div>
-        <div class="nature-caption">
-          <span class="mono" style="color:rgba(255,255,255,.45)">Nature & Landscape</span>
-          <span class="mono" style="color:rgba(255,255,255,.45)">Holistone Resorts</span>
+      <div class="loc-stage sr" style="transition-delay:.14s" id="locStage">
+        <div class="loc-stage-bg" id="locBg"></div>
+        <div class="loc-stage-items">
+          <div class="loc-stage-item" data-proj="Tatrzańska Poronin" data-type="Single-family houses">
+            <span class="mono loc-stage-num">01</span>
+            <span class="loc-stage-name">Poronin</span>
+          </div>
+          <div class="loc-stage-item" data-proj="Partercznik Hills" data-type="Investment apartments">
+            <span class="mono loc-stage-num">02</span>
+            <span class="loc-stage-name">Wisła</span>
+          </div>
+          <div class="loc-stage-item" data-proj="Osada Kościelisko" data-type="Single-family houses">
+            <span class="mono loc-stage-num">03</span>
+            <span class="loc-stage-name">Kościelisko</span>
+          </div>
+          <div class="loc-stage-item" data-proj="Osada Juno" data-type="Resort & residences">
+            <span class="mono loc-stage-num">04</span>
+            <span class="loc-stage-name">Szestno</span>
+          </div>
+        </div>
+        <div class="loc-stage-foot">
+          <span class="mono" style="color:var(--faint)" id="locProj">—</span>
+          <span class="mono" style="color:var(--faint)" id="locType">Hover to explore</span>
         </div>
       </div>
     </div>
@@ -505,13 +543,13 @@
     <div class="sec-inner">
       <div class="divline"></div>
       <span class="mono sec-tag sr">08 — Atmosphere</span>
-      <h2 class="sec-h sr">Moments<br><em>of calm.</em></h2>
+      <h2 class="sec-h sr" data-pf="0.04">Moments<br><em>of calm.</em></h2>
       <div class="gallery-mosaic sr" style="transition-delay:.1s">
-        <div class="gal-item gal-a"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-        <div class="gal-item gal-b"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-        <div class="gal-item gal-c"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-        <div class="gal-item gal-d"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
-        <div class="gal-item gal-e"><div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div></div>
+        <div class="gal-item gal-a p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+        <div class="gal-item gal-b p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+        <div class="gal-item gal-c p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+        <div class="gal-item gal-d p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
+        <div class="gal-item gal-e p-img"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div></div>
       </div>
     </div>
   </section>
@@ -522,7 +560,7 @@
       <div class="divline"></div>
       <span class="mono sec-tag sr" style="text-align:center;display:block">09 — Access</span>
       <div class="access-wrap">
-        <h2 class="sec-h sr" style="font-size:clamp(3.5rem,9vw,9rem)">Access is<br><em>personal.</em></h2>
+        <h2 class="sec-h sr" data-pf="0.04" style="font-size:clamp(3.5rem,9vw,9rem)">Access is<br><em>personal.</em></h2>
         <p class="sec-p sr" style="transition-delay:.1s">Holistone komunikuje dostęp w sposób selektywny i spokojny — nie jako „kup teraz", ale jako zaproszenie do rozmowy i poznania miejsca.</p>
         <div class="cta-row sr" style="transition-delay:.2s">
           <button class="cta" data-cursor data-enter>
@@ -541,7 +579,7 @@
       <span class="mono sec-tag sr">10 — Vision</span>
       <div class="about-grid">
         <div>
-          <h2 class="sec-h sr">Created for places<br><em>that last.</em></h2>
+          <h2 class="sec-h sr" data-pf="0.04">Created for places<br><em>that last.</em></h2>
           <p class="sec-p sr" style="transition-delay:.1s">Holistone Resorts is built with timeless places in mind — ones that unite architecture, nature, quality of craft and the experience of a stay.</p>
           <p class="sec-p sr" style="transition-delay:.16s;margin-top:16px">The brand builds resorts not only to be visited, but to be remembered. By Kaliński Invest.</p>
         </div>
@@ -628,7 +666,7 @@
   const slidesEl=document.getElementById('slides');
   places.forEach((p,i)=>{const d=document.createElement('div');
     d.className='slide'+(i===0?' active':'');
-    d.innerHTML='<div style="width:100%;height:100%;background:#2A1F19;display:flex;align-items:center;justify-content:center"><span style="font-family:Archivo,sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#685E58">[image here]</span></div>';slidesEl.appendChild(d)});
+    d.innerHTML='<div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat</div>';slidesEl.appendChild(d)});
   const slides=[...slidesEl.children];let idx=0;
   const placeEl=document.getElementById('place'),nEl=document.getElementById('cur-n');
   function set(i){slides[idx].classList.remove('active');idx=(i+places.length)%places.length;
@@ -677,6 +715,51 @@
     el.addEventListener('mouseenter',()=>{ring.classList.add('big');rt.textContent=el.dataset.enter?'Enter':'View'});
     el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
   });
+
+  /* location stage interaction */
+  (function(){
+    const stage=document.getElementById('locStage');
+    if(!stage)return;
+    const bg=document.getElementById('locBg');
+    const proj=document.getElementById('locProj');
+    const type=document.getElementById('locType');
+    stage.querySelectorAll('.loc-stage-item').forEach(item=>{
+      item.addEventListener('mouseenter',()=>{
+        bg.style.opacity='1';bg.style.transform='scale(1)';
+        proj.textContent=item.dataset.proj||'—';
+        type.textContent=item.dataset.type||'—';
+      });
+      item.addEventListener('mouseleave',()=>{
+        bg.style.opacity='0';bg.style.transform='scale(1.1)';
+        proj.textContent='—';type.textContent='Hover to explore';
+      });
+    });
+  })();
+
+  /* scroll parallax */
+  (function(){
+    let raf=null;
+    function par(){
+      const mid=innerHeight*.5;
+      document.querySelectorAll('.p-img').forEach(wrap=>{
+        const r=wrap.getBoundingClientRect();
+        if(r.bottom<-150||r.top>innerHeight+150)return;
+        const off=((r.top+r.height*.5)-mid)*.13;
+        const ch=wrap.firstElementChild;
+        if(ch)ch.style.transform='scale(1.14) translateY('+off+'px)';
+      });
+      document.querySelectorAll('[data-pf]').forEach(el=>{
+        const r=el.getBoundingClientRect();
+        if(r.bottom<-150||r.top>innerHeight+150)return;
+        const speed=parseFloat(el.dataset.pf)||.04;
+        const off=((r.top+r.height*.5)-mid)*speed;
+        el.style.transform='translateY('+off+'px)';
+      });
+      raf=null;
+    }
+    addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(par)},{passive:true});
+    par();
+  })();
 </script>
 </body>
 </html>
