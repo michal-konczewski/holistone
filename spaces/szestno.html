@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Szestno — Holistone Resorts</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Archivo:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--ink:#E3DAD4;--dim:#A69F9B;--faint:#685E58;--line:rgba(140,116,102,.30);--gold:#CBB5A7}
+  *{margin:0;padding:0;box-sizing:border-box}
+  @media(hover:hover){*{cursor:none}}
+  body{color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;background:#1C1512;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'Archivo',sans-serif;letter-spacing:.22em;text-transform:uppercase;font-size:10px}
+  #grain,#vig{position:fixed;inset:0;pointer-events:none;z-index:60}
+  #vig{box-shadow:inset 0 0 280px 60px rgba(0,0,0,.55)}
+  #grain{opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:drift 12s ease-in-out infinite}
+  @keyframes drift{0%{transform:translate(0,0)}50%{transform:translate(-1.5%,-1%)}100%{transform:translate(0,0)}}
+  #cur{position:fixed;top:0;left:0;z-index:70;pointer-events:none;mix-blend-mode:difference}
+  #ring{width:32px;height:32px;border:1px solid #fff;border-radius:50%;transform:translate(-50%,-50%);transition:width .35s,height .35s,background .35s}
+  #ring.big{width:90px;height:90px;background:#fff}
+  #ringtxt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Archivo',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#000;opacity:0;transition:opacity .3s;white-space:nowrap}
+  #ring.big #ringtxt{opacity:1}
+  #dot{position:fixed;top:0;left:0;width:4px;height:4px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);z-index:70;pointer-events:none;mix-blend-mode:difference}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:55;display:flex;align-items:center;justify-content:space-between;padding:20px 32px;background:linear-gradient(180deg,rgba(20,18,19,.7),transparent);transition:background .5s}
+  body.scrolled .topbar{background:rgba(20,18,19,.94)}
+  .brand{font-family:'Archivo',sans-serif;letter-spacing:.28em;text-transform:uppercase;font-size:11px;color:var(--ink);text-decoration:none}
+  .right{display:flex;align-items:center;gap:14px}
+  .send{padding:12px 24px;color:var(--ink);background:rgba(255,255,255,.05);border:none;font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;border-radius:9px;transition:background .3s;text-decoration:none;display:inline-flex;align-items:center;cursor:none}
+  .send:hover{background:rgba(255,255,255,.13)}
+  .lang-sw{display:flex;align-items:center;gap:2px}
+  .lang-btn{background:none;border:none;font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);cursor:none;padding:6px 4px;transition:color .3s}
+  .lang-btn.active{color:var(--ink)}
+  .lang-sep{color:var(--faint);font-size:10px;font-family:'Archivo',sans-serif}
+  .hero{position:relative;height:100vh;display:flex;align-items:flex-end;overflow:hidden}
+  .hero-img{position:absolute;inset:0}
+  .hero-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.45);transform:scale(1.06);transition:transform 1.8s cubic-bezier(.16,1,.3,1)}
+  body.in .hero-img img{transform:scale(1)}
+  .hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(28,21,18,.85) 0%,transparent 55%)}
+  .hero-content{position:relative;z-index:2;padding:clamp(32px,5vw,72px);width:100%}
+  .hero-tag{display:flex;align-items:center;gap:16px;margin-bottom:clamp(16px,2vw,28px)}
+  .hero-back{display:flex;align-items:center;gap:8px;color:var(--faint);text-decoration:none;font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;transition:color .3s}
+  .hero-back:hover{color:var(--gold)}
+  .hero-back svg{width:14px;height:14px;stroke:currentColor}
+  .hero-num{color:var(--faint)}
+  .hero-h{font-weight:300;font-size:clamp(4rem,12vw,11rem);line-height:.88;letter-spacing:-.03em}
+  .hero-h .line{display:block;overflow:hidden}
+  .hero-sub{margin-top:clamp(12px,1.5vw,20px);font-weight:300;font-size:clamp(1rem,1.6vw,1.3rem);color:var(--dim);max-width:480px;line-height:1.5}
+  .hero-status{display:inline-flex;align-items:center;gap:8px;margin-top:clamp(24px,3vw,40px);font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(203,181,167,.3);border-radius:999px;padding:8px 18px}
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .rv{opacity:0;transform:translateY(24px);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .rv.vis{opacity:1;transform:none}
+  .ch{display:inline-block;transform:translateY(115%);opacity:0;transition:transform 1.4s cubic-bezier(.16,1,.3,1),opacity 1.4s cubic-bezier(.16,1,.3,1)}
+  body.in .ch{transform:translateY(0);opacity:1}
+  .sec{padding:clamp(64px,9vw,120px) clamp(24px,5vw,80px)}
+  .sec-dark{background:#130E0B}
+  .divline{width:100%;height:1px;background:var(--line);margin-bottom:clamp(32px,4vw,56px)}
+  .sec-tag{display:block;color:var(--faint);margin-bottom:clamp(24px,3vw,40px)}
+  .desc-grid{display:grid;gap:clamp(40px,6vw,80px);align-items:start}
+  @media(min-width:900px){.desc-grid{grid-template-columns:1fr 1fr}}
+  .desc-h{font-weight:300;font-size:clamp(2.4rem,5vw,4.5rem);line-height:1;letter-spacing:-.02em;margin-bottom:clamp(24px,3vw,40px)}
+  .desc-h em{font-style:italic;color:var(--dim)}
+  .desc-p{font-weight:300;font-size:clamp(1rem,1.4vw,1.2rem);color:var(--dim);line-height:1.7;margin-bottom:20px}
+  .desc-p:last-child{margin-bottom:0}
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:clamp(40px,5vw,64px)}
+  .spec-item{background:#1C1512;padding:clamp(24px,3vw,40px)}
+  .sec-dark .spec-item{background:#130E0B}
+  .spec-label{display:block;color:var(--faint);margin-bottom:12px;font-size:9px}
+  .spec-val{font-weight:300;font-size:clamp(1.3rem,2.5vw,2rem);line-height:1.1;color:var(--ink)}
+  .spec-unit{font-size:.7em;color:var(--dim);margin-left:4px}
+  .gallery{display:grid;gap:3px;margin-top:clamp(32px,4vw,56px)}
+  .gallery-main{aspect-ratio:16/9;overflow:hidden;border-radius:12px 12px 0 0;height:clamp(320px,50vw,600px)}
+  .gallery-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px}
+  .g-cell{overflow:hidden;height:clamp(140px,20vw,240px)}
+  .g-cell:first-child{border-radius:0 0 0 12px}.g-cell:last-child{border-radius:0 0 12px 0}
+  .g-reveal{width:100%;height:100%;clip-path:inset(100% 0 0 0);transition:clip-path 1.2s cubic-bezier(.16,1,.3,1)}
+  .g-reveal.vis{clip-path:inset(0% 0 0 0)}
+  .g-img{width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:transform .8s cubic-bezier(.16,1,.3,1),filter .8s}
+  .gallery-main:hover .g-img,.g-cell:hover .g-img{transform:scale(1.04);filter:brightness(.9)}
+  .timeline{margin-top:clamp(40px,5vw,64px)}
+  .tl-item{display:grid;grid-template-columns:140px 1fr;gap:32px;padding:clamp(20px,2.5vw,32px) 0;border-bottom:1px solid var(--line);align-items:start}
+  .tl-item:first-child{border-top:1px solid var(--line)}
+  .tl-date{font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);padding-top:4px}
+  .tl-label{font-weight:300;font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);line-height:1.5}
+  .tl-label strong{display:block;color:var(--ink);font-weight:300;font-size:clamp(1.1rem,1.7vw,1.4rem);margin-bottom:4px}
+  .tl-active .tl-date{color:var(--gold)}.tl-active .tl-label strong{color:var(--gold)}
+  .cta-sec{text-align:center;max-width:700px;margin:0 auto}
+  .cta-sec .sec-h{font-weight:300;font-size:clamp(2.5rem,6vw,5rem);line-height:1;letter-spacing:-.02em;margin-bottom:clamp(16px,2vw,24px)}
+  .cta-sec .sec-h em{font-style:italic;color:var(--dim)}
+  .cta-sec p{font-weight:300;font-size:clamp(1rem,1.4vw,1.15rem);color:var(--dim);line-height:1.6;margin-bottom:clamp(32px,4vw,48px)}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+  .cta{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:999px;padding:17px 40px;background:none;color:var(--ink);font-family:'Archivo',sans-serif;letter-spacing:.24em;text-transform:uppercase;font-size:10px;cursor:none;text-decoration:none;display:inline-flex;align-items:center}
+  .cta .lbl{position:relative;z-index:2;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+  .cta .fill{position:absolute;left:50%;top:50%;width:0;height:0;background:var(--ink);border-radius:50%;transform:translate(-50%,-50%);transition:width .6s cubic-bezier(.16,1,.3,1),height .6s cubic-bezier(.16,1,.3,1)}
+  .cta .lbl2{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;color:#151415;opacity:0;transition:opacity .4s;letter-spacing:.24em;font-family:'Archivo',sans-serif;font-size:10px}
+  .cta:hover .fill{width:240%;height:600%}.cta:hover .lbl{transform:translateY(-130%)}.cta:hover .lbl2{opacity:1}
+  .resort-nav{display:flex;justify-content:space-between;align-items:center;padding:clamp(32px,4vw,56px) clamp(24px,5vw,80px);border-top:1px solid var(--line)}
+  .resort-nav a{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--faint);font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;transition:color .3s}
+  .resort-nav a:hover{color:var(--ink)}
+  .resort-nav .name{display:block;font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.5vw,2rem);font-weight:300;color:var(--ink);text-transform:none;letter-spacing:normal;margin-top:4px}
+  .resort-nav svg{width:16px;height:16px;stroke:currentColor}
+</style>
+</head>
+<body>
+  <div id="vig"></div><div id="grain"></div>
+  <div id="cur"><div id="ring"><span id="ringtxt">View</span></div></div><div id="dot"></div>
+  <header class="topbar">
+    <a href="../index.html" class="brand" data-cursor>Holistone</a>
+    <div class="right">
+      <div class="lang-sw"><button class="lang-btn active" data-lang="en">EN</button><span class="lang-sep">/</span><button class="lang-btn" data-lang="pl">PL</button></div>
+      <a href="../contact.html" class="send" data-cursor data-en="Contact" data-pl="Kontakt">Contact</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-img"><img src="../image.png" alt="Szestno" /></div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <a href="../spaces.html" class="hero-back" data-cursor>
+          <svg viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 3L2 7l4 4" stroke-width="1"/></svg>
+          <span data-en="All locations" data-pl="Wszystkie lokalizacje">All locations</span>
+        </a>
+        <span class="mono hero-num">04 / 04</span>
+      </div>
+      <h1 class="hero-h"><span class="line" data-word-en="Szestno" data-word-pl="Szestno"></span></h1>
+      <p class="hero-sub rv" data-en="On the edge of a Masurian lake. Water, reeds and the horizon." data-pl="Na skraju mazurskiego jeziora. Woda, trzciny i horyzont.">On the edge of a Masurian lake. Water, reeds and the horizon.</p>
+      <div class="hero-status rv" style="transition-delay:.1s"><span class="status-dot"></span><span data-en="In preparation" data-pl="W przygotowaniu">In preparation</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="divline rv"></div>
+    <span class="mono sec-tag rv" data-en="About the resort" data-pl="O resorcie">About the resort</span>
+    <div class="desc-grid">
+      <div>
+        <h2 class="desc-h rv"><span data-en="Light on" data-pl="Światło na">Light on</span><br><em><span data-en="water." data-pl="wodzie.">water.</span></em></h2>
+      </div>
+      <div>
+        <p class="desc-p rv" data-en="Holistone Szestno is set on the shores of Lake Czos in the heart of Masuria — a landscape of still water, birch forests and vast skies. The resort is the most horizontal of all Holistone properties, designed to dissolve into the lakeside terrain." data-pl="Holistone Szestno powstaje na brzegu jeziora Czos w sercu Mazur — w krajobrazie spokojnej wody, brzozowych lasów i rozległego nieba. Resort jest najbardziej horyzontalną ze wszystkich nieruchomości Holistone, zaprojektowaną by wtopić się w nadjeziorne otoczenie.">Holistone Szestno is set on the shores of Lake Czos in the heart of Masuria — a landscape of still water, birch forests and vast skies. The resort is the most horizontal of all Holistone properties, designed to dissolve into the lakeside terrain.</p>
+        <p class="desc-p rv" style="transition-delay:.08s" data-en="Architecture of glass, steel and weathered oak — pavilions arranged along the waterfront, each with a private jetty and unobstructed lake views. An indoor pool, sauna and boathouse complete the programme." data-pl="Architektura ze szkła, stali i sezonowanego dębu — pawilony ustawione wzdłuż brzegu, każdy z prywatnym pomostem i niezakłóconym widokiem na jezioro. Kryty basen, sauna i przystań dopełniają program.">Architecture of glass, steel and weathered oak — pavilions arranged along the waterfront, each with a private jetty and unobstructed lake views. An indoor pool, sauna and boathouse complete the programme.</p>
+        <p class="desc-p rv" style="transition-delay:.14s" data-en="Szestno is Holistone's only lakeside property and its most architecturally contemporary — a counterpoint to the mountain resorts, designed for those who seek flatness, silence and the slow rhythm of water." data-pl="Szestno to jedyna nadjeziorna nieruchomość Holistone i najbardziej współczesna architektonicznie — kontrapunkt dla górskich resortów, zaprojektowany dla tych, którzy szukają płaskości, ciszy i powolnego rytmu wody.">Szestno is Holistone's only lakeside property and its most architecturally contemporary — a counterpoint to the mountain resorts, designed for those who seek flatness, silence and the slow rhythm of water.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-dark">
+    <div class="divline rv"></div>
+    <span class="mono sec-tag rv" data-en="Technical details" data-pl="Dane techniczne">Technical details</span>
+    <div class="specs-grid rv" style="transition-delay:.1s">
+      <div class="spec-item"><span class="mono spec-label" data-en="Location" data-pl="Lokalizacja">Location</span><span class="spec-val">Szestno<span class="spec-unit" data-en="· Masuria" data-pl="· Mazury">· Masuria</span></span></div>
+      <div class="spec-item"><span class="mono spec-label" data-en="Apartments" data-pl="Apartamenty">Apartments</span><span class="spec-val">20<span class="spec-unit" data-en="units" data-pl="lokale">units</span></span></div>
+      <div class="spec-item"><span class="mono spec-label" data-en="Area" data-pl="Powierzchnia">Area</span><span class="spec-val">55–130<span class="spec-unit">m²</span></span></div>
+      <div class="spec-item"><span class="mono spec-label" data-en="Waterfront" data-pl="Linia brzegowa">Waterfront</span><span class="spec-val">380<span class="spec-unit">m</span></span></div>
+      <div class="spec-item"><span class="mono spec-label" data-en="Standard" data-pl="Standard">Standard</span><span class="spec-val" data-en="Ultra premium" data-pl="Ultra premium">Ultra premium</span></div>
+      <div class="spec-item"><span class="mono spec-label" data-en="Completion" data-pl="Oddanie">Completion</span><span class="spec-val">2028<span class="spec-unit" data-en="est." data-pl="szac.">est.</span></span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="divline rv"></div>
+    <span class="mono sec-tag rv" data-en="Gallery" data-pl="Galeria">Gallery</span>
+    <div class="gallery rv" style="transition-delay:.1s">
+      <div class="gallery-main"><div class="g-reveal"><img class="g-img" src="../image.png" alt="" /></div></div>
+      <div class="gallery-row">
+        <div class="g-cell"><div class="g-reveal" style="transition-delay:.1s"><img class="g-img" src="../image.png" alt="" /></div></div>
+        <div class="g-cell"><div class="g-reveal" style="transition-delay:.2s"><img class="g-img" src="../image.png" alt="" /></div></div>
+        <div class="g-cell"><div class="g-reveal" style="transition-delay:.3s"><img class="g-img" src="../image.png" alt="" /></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-dark">
+    <div class="divline rv"></div>
+    <span class="mono sec-tag rv" data-en="Investment timeline" data-pl="Harmonogram inwestycji">Investment timeline</span>
+    <div class="timeline rv" style="transition-delay:.1s">
+      <div class="tl-item tl-active"><span class="tl-date">2025 Q3</span><div class="tl-label"><strong data-en="Design phase" data-pl="Faza projektowa">Design phase</strong><span data-en="Architectural concept and lakeside environmental study." data-pl="Koncepcja architektoniczna i badanie środowiska nadjeziornego.">Architectural concept and lakeside environmental study.</span></div></div>
+      <div class="tl-item"><span class="tl-date">2026 Q2</span><div class="tl-label"><strong data-en="Construction start" data-pl="Rozpoczęcie budowy">Construction start</strong><span data-en="Site preparation, jetty and foundation works." data-pl="Przygotowanie terenu, pomosty i prace fundamentowe.">Site preparation, jetty and foundation works.</span></div></div>
+      <div class="tl-item"><span class="tl-date">2027 Q3</span><div class="tl-label"><strong data-en="Interior fit-out" data-pl="Prace wykończeniowe">Interior fit-out</strong><span data-en="Contemporary interiors, lake-facing glazing and boathouse." data-pl="Nowoczesne wnętrza, przeszklenia od strony jeziora i przystań.">Contemporary interiors, lake-facing glazing and boathouse.</span></div></div>
+      <div class="tl-item"><span class="tl-date">2028 Q2</span><div class="tl-label"><strong data-en="Opening" data-pl="Otwarcie">Opening</strong><span data-en="Resort handover and first guest arrivals." data-pl="Przekazanie resortu i pierwsi goście.">Resort handover and first guest arrivals.</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="cta-sec rv">
+      <h2 class="sec-h"><span data-en="Interested in" data-pl="Zainteresowany">Interested in</span><br><em><span data-en="Szestno?" data-pl="Szestnem?">Szestno?</span></em></h2>
+      <p data-en="Request more information about this investment, pricing or availability." data-pl="Poproś o więcej informacji o tej inwestycji, cenach lub dostępności.">Request more information about this investment, pricing or availability.</p>
+      <div class="cta-row">
+        <a href="../contact.html" class="cta" data-cursor><span class="lbl" data-en="Get in touch" data-pl="Skontaktuj się">Get in touch</span><span class="fill"></span><span class="lbl2" data-en="Get in touch" data-pl="Skontaktuj się">Get in touch</span></a>
+        <a href="../spaces.html" class="cta" data-cursor><span class="lbl" data-en="All locations" data-pl="Wszystkie lokalizacje">All locations</span><span class="fill"></span><span class="lbl2" data-en="All locations" data-pl="Wszystkie lokalizacje">All locations</span></a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="resort-nav">
+    <a href="koscielisko.html" data-cursor><svg viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 3L2 7l4 4" stroke-width="1"/></svg><div><span data-en="Previous" data-pl="Poprzedni">Previous</span><span class="name">Kościelisko</span></div></a>
+    <a href="../spaces.html" data-cursor style="text-align:right"><div><span data-en="All locations" data-pl="Wszystkie lokalizacje">All locations</span><span class="name" style="font-size:clamp(.9rem,1.5vw,1.2rem);color:var(--faint)" data-en="View all resorts" data-pl="Zobacz wszystkie">View all resorts</span></div><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke-width="1"/></svg></a>
+  </nav>
+
+<script>
+  const ring=document.getElementById('ring'),dot=document.getElementById('dot');
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';});
+  (function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';requestAnimationFrame(loop)})();
+  document.querySelectorAll('[data-cursor]').forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('big'));el.addEventListener('mouseleave',()=>ring.classList.remove('big'));});
+  addEventListener('scroll',()=>document.body.classList.toggle('scrolled',scrollY>60),{passive:true});
+  function splitHeading(lang){document.querySelectorAll('.hero-h .line').forEach((line,li)=>{const word=lang==='pl'?line.dataset.wordPl:line.dataset.wordEn;line.innerHTML='';[...word].forEach((ch,i)=>{const s=document.createElement('span');s.className='ch';s.textContent=ch===' '?' ':ch;s.style.transitionDelay=(li*.2+i*.05)+'s';line.appendChild(s);});});}
+  splitHeading('en');
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}});},{threshold:.15});
+  document.querySelectorAll('.rv,.g-reveal').forEach(el=>io.observe(el));
+  requestAnimationFrame(()=>setTimeout(()=>document.body.classList.add('in'),60));
+  function applyLang(lang){document.querySelectorAll('[data-en]:not(.line)').forEach(el=>{el.textContent=lang==='pl'?(el.dataset.pl||el.dataset.en):el.dataset.en;});splitHeading(lang);document.querySelectorAll('.hero-h .ch').forEach(ch=>{ch.style.transitionDelay='0s';ch.style.transform='translateY(0)';ch.style.opacity='1';});document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));document.documentElement.lang=lang;localStorage.setItem('hl_lang',lang);}
+  document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+  const saved=localStorage.getItem('hl_lang');if(saved&&saved!=='en')applyLang(saved);
+</script>
+</body>
+</html>
