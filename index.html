@@ -111,7 +111,16 @@
   .smalltype{font-weight:300;font-size:clamp(1.1rem,2vw,1.7rem);line-height:1.04;color:var(--ink)}
   .smalltype .l{display:block}.smalltype .l:nth-child(2){padding-left:1.6vw}.smalltype .l:nth-child(3){padding-left:.6vw}
   .slider-counter{font-size:clamp(1.4rem,2.2vw,2.2rem);color:var(--dim);font-weight:300;letter-spacing:-.01em}
-  .slider{position:relative;flex:1;border-radius:14px;overflow:hidden;
+  .tile-layer{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .tile{position:absolute;overflow:hidden;border-radius:12px;will-change:transform,opacity;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+  .t1{left:1.5%;top:14%;width:23%;height:42%}
+  .t2{left:1.5%;top:59%;width:23%;height:32%}
+  .t3{left:60%;top:4%;width:16%;height:22%}
+  .t4{right:1.5%;top:14%;width:21%;height:37%}
+  .t5{right:1.5%;top:54%;width:21%;height:38%}
+  .t6{left:26%;top:72%;width:22%;height:26%}
+  .slider{position:relative;flex:1;z-index:2;border-radius:14px;overflow:hidden;
     box-shadow:0 50px 90px -40px rgba(0,0,0,.85);will-change:width,height;
     margin:0 auto;width:100%}
   .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
@@ -339,6 +348,14 @@
   <!-- SLIDER -->
   <section class="scrollwrap" id="scrollwrap">
     <div class="sticky">
+      <div class="tile-layer">
+        <div class="tile t1 par" data-depth="14"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat"></div></div>
+        <div class="tile t2 par" data-depth="22"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat"></div></div>
+        <div class="tile t3 par" data-depth="30"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat"></div></div>
+        <div class="tile t4 par" data-depth="18"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat"></div></div>
+        <div class="tile t5 par" data-depth="26"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat"></div></div>
+        <div class="tile t6 par" data-depth="34"><div style="width:100%;height:100%;background:#2A1F19 url(image.png) center/cover no-repeat"></div></div>
+      </div>
       <div class="slider-header">
         <div class="smalltype"><span class="l">Not</span><span class="l">Everything</span><span class="l">is Visible</span></div>
         <div class="slider-counter mono"><span id="cur-n">1</span><span style="color:var(--faint)">/7</span></div>
@@ -678,10 +695,12 @@
     const pad=clamp((1-e)*clamp(24,4,80),0,60);
     slider.style.margin='0 '+pad+'px';
     slider.style.borderRadius=(14*(1-e))+'px';
+    const fadeUI=clamp(1-p*2,0,1);
     const st=document.querySelector('.smalltype');
-    if(st)st.style.opacity=clamp(1-p*2,0,1);
+    if(st)st.style.opacity=fadeUI;
     const ctr=document.querySelector('.slider-counter');
-    if(ctr)ctr.style.opacity=clamp(1-p*2,0,1);
+    if(ctr)ctr.style.opacity=fadeUI;
+    document.querySelectorAll('.tile').forEach(t=>t.style.opacity=fadeUI);
     if(r.top<innerHeight&&r.bottom>0){
       const want=clamp(Math.round(p*(places.length-1)),0,places.length-1);
       if(want!==idx)set(want);
